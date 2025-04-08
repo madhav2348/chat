@@ -8,24 +8,25 @@
 // });
 // import { WebSocketServer } from "ws";
 // const wss = new WebSocketServer({ port: 5001 });
+
 import bodyParser from "body-parser";
 import express from "express";
 import cors from "cors";
+import routes from "./routes/page";
 
-import wss from "express-ws";
-
-import { user, chat } from "./routes/page";
-const app = wss(express()).app;
+const app = express();
 
 app.use(bodyParser.json());
 app.use(
   cors({
     origin: "*",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    methods: "GET,HEAD,POST,",
   })
 );
 
-app.use(user);
-app.use(chat);
+app.use(routes);
+// app.use(user);
+// app.use(chat);
 
-app.listen(process.env.PORT || 5000);
+app.listen(5000);
+// app.listen(process.env.PORT || 5000);

@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { v1 as uuid } from "uuid";
-
 export default function Login() {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -18,7 +16,7 @@ export default function Login() {
       navigate("/roomID");
     } catch (e) {
       console.log(e);
-      // console.log(JSON.stringify(userData));
+      
     }
   }
 
@@ -32,7 +30,7 @@ export default function Login() {
   const [userData, SetUserData] = useState({
     name: "",
     room: "",
-    roomId: uuid(),
+    // roomId: uuid(),
   });
   return (
     <>

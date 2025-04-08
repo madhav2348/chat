@@ -1,14 +1,23 @@
-import express, { Request, Response } from "express";
+import express, { Request, Response, Router } from "express";
+import wss from "express-ws";
+import Manage from "./store/manager";
+const app = wss(express()).app;
 
-const app = express();
-
-export const user = app.post("/addUser", (req: Request, res: Response) => {
+const router = Router();
+const manager = new Manage();
+router.post("/addUser", (req: Request, res: Response) => {
   const data = req.body;
-  console.log(data)
-  res.json({messafe:"done"})
+  manager.initRoom(data.room, { name: data.name });
+  // console.log(data);
+  res.json({ message: "done" });
 });
-export const chat = app.post("/chat", (req: Request, res: Response) => {
-    const chat = req.body;
-    console.log(chat);
-    res.json({messafe:"ote oce"})
+router.post("/chat", (req: Request, res: Response) => {
+  const chat = req.body;
+  // manager.initRoom(data.room, { name: data.name });
+  manager.sendMessage(chat.message);
+
+  console.log(chat);
+  res.json({ message: "chat " });
 });
+
+export default router;
