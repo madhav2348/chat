@@ -14,7 +14,9 @@ import express from "express";
 import cors from "cors";
 import routes from "./routes/page";
 
-const app = express();
+import wss from "express-ws";
+const app = wss(express()).app;
+
 
 app.use(bodyParser.json());
 app.use(
@@ -23,10 +25,12 @@ app.use(
     methods: "GET,HEAD,POST,",
   })
 );
+app.ws("/roomID", (ws, req) => {
+  ws.on("message", (message) => {
+    ws.send(message);
+  });
+});
 
 app.use(routes);
-// app.use(user);
-// app.use(chat);
-
 app.listen(5000);
 // app.listen(process.env.PORT || 5000);

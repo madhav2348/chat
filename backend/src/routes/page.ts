@@ -1,7 +1,5 @@
-import express, { Request, Response, Router } from "express";
-import wss from "express-ws";
+import { Request, Response, Router } from "express";
 import Manage from "./store/manager";
-const app = wss(express()).app;
 
 const router = Router();
 
