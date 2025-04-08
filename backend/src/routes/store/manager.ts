@@ -8,16 +8,18 @@ export default class Manage implements User {
 
   constructor() {
     this.storage = new Map<string, Room>();
-    this.roomName = "";
+    this.roomName = ""; // single quotes only , dont mess up
   }
 
-  initRoom(roomId: string, user?: User) {
-    this.storage.set(roomId, { roomName: roomId, id: uuid(), chat: [] });
+  initRoom(roomName: string, user?: User) {
+    this.storage.set(roomName, { roomName: roomName, id: uuid(), chat: [] });
     this.id = uuid();
-    this.roomName = roomId;
+    this.roomName = roomName;
     this.name = user?.name;
     console.log(this.storage);
+    console.log(this.roomName);
   }
+
   // addUsers( user: User) {
   //   this.id = user.id;
   //   this.name = user.name;
@@ -42,6 +44,5 @@ export default class Manage implements User {
       chat: [...room.chat, chats],
       roomName: room.roomName,
     });
-    console.log(this.storage);
   }
 }
