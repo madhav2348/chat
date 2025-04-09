@@ -18,6 +18,10 @@ import { WebSocketServer } from "ws";
 
 
 const app = express();
+
+const httpServer = http.createServer(app)
+const wss = new WebSocketServer({server:httpServer});
+
 const PORT = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
@@ -30,7 +34,9 @@ app.use(
 app.use(routes);
 
 
+httpServer.on('upgrade',(req , socket)=>{
 
+})
 
 app.listen(PORT, () => {
   console.log(`Backend is running on PORT ${PORT}`);
