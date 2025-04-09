@@ -13,7 +13,7 @@ export default function Chat() {
 
     console.log(message);
     try {
-      await fetch(`http://localhost:5000/chat`, {
+      await fetch(`http://localhost:5000/roomID/123`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
