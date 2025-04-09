@@ -3,12 +3,14 @@ import { v1 as uuid } from "uuid";
 export default class Manage implements User {
   name!: string | undefined;
   id!: string;
+  public roomID: string | "";
   private storage: Map<string, Room>;
   private roomName: string; // dont ask me why i have done this
 
   constructor() {
     this.storage = new Map<string, Room>();
     this.roomName = ""; // single quotes only , dont mess up
+    this.roomID = "";
   }
 
   initRoom(roomName: string, user?: User) {
@@ -16,8 +18,7 @@ export default class Manage implements User {
     this.id = uuid();
     this.roomName = roomName;
     this.name = user?.name;
-    console.log(this.storage);
-    console.log(this.roomName);
+    this.roomID = this.storage.get(this.roomName)!.id;
   }
 
   // addUsers( user: User) {

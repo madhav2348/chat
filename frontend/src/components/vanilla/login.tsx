@@ -6,17 +6,17 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      await fetch("http://localhost:5000/addUser", {
+      const url = await fetch("http://localhost:5000/addUser", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(userData),
       });
-      navigate("/roomID");
+      let id = await url.json()
+      navigate(`/roomID/${id.roomID}`);
     } catch (e) {
       console.log(e);
-      
     }
   }
 
@@ -30,7 +30,7 @@ export default function Login() {
   const [userData, SetUserData] = useState({
     name: "",
     room: "",
-    // roomId: uuid(),
+    // Dd: uuid(),
   });
   return (
     <>

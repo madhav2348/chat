@@ -15,9 +15,11 @@ import cors from "cors";
 import routes from "./routes/page";
 
 import wss from "express-ws";
+import Manage from "./routes/store/manager";
 const app = wss(express()).app;
+const PORT = process.env.PORT || 5000;
 
-
+const manager = new Manage();
 app.use(bodyParser.json());
 app.use(
   cors({
@@ -25,6 +27,7 @@ app.use(
     methods: "GET,HEAD,POST,",
   })
 );
+app.use(routes);
 app.ws("/roomID", (ws, req) => {
   ws.on("message", (message) => {
     ws.send(message);
@@ -32,5 +35,7 @@ app.ws("/roomID", (ws, req) => {
 });
 
 app.use(routes);
-app.listen(5000);
+app.listen(PORT, () => {
+  console.log(`Backend is running on PORT ${PORT}`);
+});
 // app.listen(process.env.PORT || 5000);
