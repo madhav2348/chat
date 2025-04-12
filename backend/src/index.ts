@@ -4,6 +4,7 @@ import { createServer } from 'http';
 import { Server, Socket } from 'socket.io';
 import cors from 'cors';
 import { v4 as uuidv4 } from 'uuid';
+import router from './routes/page';
 
 const app = express();
 const httpServer = createServer(app);
@@ -15,6 +16,8 @@ const io = new Server(httpServer, {
 
 app.use(cors());
 app.use(express.json());
+
+app.use(router)
 
 interface Message {
   id: string;
