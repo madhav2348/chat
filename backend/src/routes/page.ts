@@ -7,6 +7,8 @@ const manager = new Manage();
 
 router.post("/addUser", (req: Request, res: Response) => {
   const data = req.body;
+  console.log(data);
+  
   manager.initRoom(data.room, { name: data.name });
   res.json({ message: "done", roomID: manager.roomID });
 });
