@@ -13,24 +13,29 @@ import bodyParser from "body-parser";
 import express from "express";
 import cors from "cors";
 import routes from "./routes/page";
-import http from "http";
-import { WebSocketServer } from "ws";
-
+//import http from "http";
+//import { WebSocketServer } from "ws";
+import expressWs from 'express-ws';
 
 const app = express();
 
-const httpServer = http.createServer(app)
-const wss = new WebSocketServer({server:httpServer});
-
+const wsInstance = expressWs(app);
 const PORT = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
-app.use(
-  cors({
-    origin: "*",
-    methods: "GET,HEAD,POST,",
-  })
-);
+app.ws('/ws', (ws, req) => {
+  console.log('WebSocket connection established');
+
+  ws.on('message', (msg) => {
+    console.log('Received:', msg);
+    ws.send(`Echo: ${msg}`);
+  });
+
+  ws.on('close', () => {
+    console.log('WebSocket closed');
+  });
+});
+
 app.use(routes);
 
 
