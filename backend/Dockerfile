@@ -1,11 +1,20 @@
+
 FROM node:latest
 
-WORKDIR /usr/src/app
 
-COPY . .
+WORKDIR /app
+
+
+COPY package*.json .
+
 
 RUN npm install
 
-CMD ["node","dist/index.js"]
+
+COPY . .
+
 
 EXPOSE 5000
+
+
+CMD ["npm", "start"]
