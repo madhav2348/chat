@@ -3,7 +3,7 @@ import "./App.css";
 // import ChatSpace from "./components/ChatPlace";
 import { Route, Routes } from "react-router-dom";
 import Login from "./components/vanilla/login";
-import Chat from "./components/vanilla/newchat";
+import Chat from "./components/vanilla/newChat";
 
 function App() {
   return (
