@@ -1,49 +1,55 @@
-// import { PrismaClient } from "@prisma/client";
-// import { PrismaClient } from "../generated/prisma";
-
-// const prisma = new PrismaClient();
-// app.get("/", async (req, res) => {
-//   const query = await prisma.user.findMany();
-//   console.log(query);
-// });
-// import { WebSocketServer } from "ws";
-// const wss = new WebSocketServer({ port: 5001 });
-
-import bodyParser from "body-parser";
-import express from "express";
-import cors from "cors";
-import routes from "./routes/page";
-//import http from "http";
-//import { WebSocketServer } from "ws";
-import expressWs from 'express-ws';
+// server.ts
+import express from 'express';
+import { createServer } from 'http';
+import { Server, Socket } from 'socket.io';
+import cors from 'cors';
+import { v4 as uuidv4 } from 'uuid';
 
 const app = express();
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
+  cors: {
+    origin: '*', // Change to your frontend URL in production
+  },
+});
 
-const wsInstance = expressWs(app);
+app.use(cors());
+app.use(express.json());
+
+interface Message {
+  id: string;
+  text: string;
+  sender: string;
+  timestamp: string;
+}
+
+io.on('connection', (socket: Socket) => {
+  const { roomId, userId } = socket.handshake.query;
+
+  if (typeof roomId === 'string') {
+    socket.join(roomId);
+    console.log(`User ${userId} joined room ${roomId}`);
+  }
+
+  socket.on('message', (data: Omit<Message, 'id'>) => {
+    const fullMessage: Message = {
+      id: uuidv4(),
+      text: data.text,
+      sender: data.sender,
+      timestamp: data.timestamp || new Date().toISOString(),
+    };
+
+    if (typeof roomId === 'string') {
+      io.to(roomId).emit('message', fullMessage);
+    }
+  });
+
+  socket.on('disconnect', () => {
+    console.log(`User ${userId} disconnected`);
+  });
+});
+
 const PORT = process.env.PORT || 5000;
-
-app.use(bodyParser.json());
-app.ws('/ws', (ws, req) => {
-  console.log('WebSocket connection established');
-
-  ws.on('message', (msg) => {
-    console.log('Received:', msg);
-    ws.send(`Echo: ${msg}`);
-  });
-
-  ws.on('close', () => {
-    console.log('WebSocket closed');
-  });
+httpServer.listen(PORT, () => {
+  console.log(`Socket.IO server running on port ${PORT}`);
 });
-
-app.use(routes);
-
-
-httpServer.on('upgrade',(req , socket)=>{
-
-})
-
-app.listen(PORT, () => {
-  console.log(`Backend is running on PORT ${PORT}`);
-});
-// app.listen(process.env.PORT || 5000);
