@@ -1,7 +1,7 @@
-// ChatApp.tsx
 import React, { useState, useEffect, useRef } from "react";
 import { io, Socket } from "socket.io-client";
 import "./ChatApp.css";
+import { user } from "./mockups";
 
 interface Message {
   id: string;
@@ -44,7 +44,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
   message,
   currentUser ,
 }) => {
-  const isOwnMessage = currentUser.id === message.sender;
+  const isOwnMessage = currentUser.name === message.sender;
   console.log(currentUser.id);
   console.log(message.id)
   console.log(isOwnMessage);
@@ -177,9 +177,12 @@ const ChatApp: React.FC = () => {
       {error && <div className="error-message">{error}</div>}
 
       <div className="messages-container">
+      <ChatMessage  message={user.user1.message} currentUser={user.user1.currentUser} />
+      <ChatMessage  message={user.user2.message} currentUser={user.user2.currentUser} />
+
         {messages.length === 0 ? (
           <div className="no-messages">
-            No messages yet. Start the conversation!
+            {/* No messages yet. Start the conversation! */}
           </div>
         ) : (
           messages.map((msg) => (

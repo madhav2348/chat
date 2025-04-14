@@ -10,7 +10,7 @@ const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: '*', // Change to your frontend URL in production
+    origin: '*', 
   },
 });
 
