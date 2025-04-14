@@ -13,7 +13,7 @@ export default function Login() {
         },
         body: JSON.stringify(userData),
       });
-      let id = await url.json()
+      let id = await url.json();
       navigate(`/roomID/`);
     } catch (e) {
       console.log(e);
@@ -27,6 +27,7 @@ export default function Login() {
     });
   }
   const navigate = useNavigate();
+  const [tab, setTab] = useState("create");
   const [userData, SetUserData] = useState({
     name: "",
     room: "",
@@ -44,28 +45,36 @@ export default function Login() {
           <ul
             style={{
               display: "flex",
-              padding: "0",
-              margin: "0",
+              gap: "30%",
               justifyContent: "center",
+              padding: 0,
+              margin: 0,
               listStyle: "none",
-
-              gap: "20px",
-              alignContent: "space-between",
-              // alignItems:"center",
-              // textAlign:"justify"
             }}
           >
             <li
               style={{
-                borderBottom: "2px solid transparent",
+                
+                borderBottom:
+                  tab === "create"
+                    ? "2px solid #007BFF"
+                    : "2px solid transparent",
+                color: tab === "create" ? "#007BFF" : "#FFF",
+
                 cursor: "pointer",
               }}
+              onClick={() => setTab("create")}
             >
               Create Room
             </li>
             <li
+              onClick={() => setTab("enter")}
               style={{
-                borderBottom: "2px solid transparent",
+                borderBottom:
+                  tab === "enter"
+                    ? "2px solid #007BFF"
+                    : "2px solid transparent",
+                color: tab === "enter" ? "#007BFF" : "#FFF",
                 cursor: "pointer",
               }}
             >

@@ -32,8 +32,9 @@ const getOrCreateUser = (): User => {
   if (!id || !name) {
     id = 'user-' + Math.floor(Math.random() * 10000).toString();
     name = 'User-' + Math.floor(Math.random() * 10000).toString();
-    localStorage.setItem("userId", id);
-    localStorage.setItem("userName", name);
+    localStorage.setItem('userId',id)
+    localStorage.setItem('userName',name)
+ 
   }
 
   return { id, name };
@@ -45,9 +46,8 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
   currentUser ,
 }) => {
   const isOwnMessage = currentUser.name === message.sender;
-  console.log(currentUser.id);
-  console.log(message.id)
-  console.log(isOwnMessage);
+ console.log(message);
+ console.log(currentUser);
 
   return (
     <div

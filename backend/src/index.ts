@@ -31,7 +31,7 @@ io.on('connection', (socket: Socket) => {
 
   if (typeof roomId === 'string') {
     socket.join(roomId);
-    console.log(`User ${userId} joined room ${roomId}`);
+   
   }
 
   socket.on('message', (data: Omit<Message, 'id'>) => {
