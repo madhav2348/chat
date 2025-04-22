@@ -1,9 +1,9 @@
 import { Request, Response, Router } from "express";
-import Manage from "./store/manager";
+import {manager} from "./store/manager";
 
 const router = Router();
 
-const manager = new Manage();
+
 
 router.post("/addUser", (req: Request, res: Response) => {
   const data = req.body;

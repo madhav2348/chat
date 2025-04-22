@@ -1,6 +1,6 @@
 import { Room, User } from "./store";
 import { v1 as uuid } from "uuid";
-export default class Manage implements User {
+class Manage implements User {
   name!: string | undefined;
   id!: string;
   public roomID: string | "";
@@ -47,3 +47,5 @@ export default class Manage implements User {
     });
   }
 }
+
+export const manager = new Manage();
