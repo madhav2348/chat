@@ -14,7 +14,7 @@ export default function Login() {
         body: JSON.stringify(userData),
       });
       let id = await url.json();
-      navigate(`/roomID/`);
+      navigate(`/roomID`);
     } catch (e) {
       console.log(e);
     }

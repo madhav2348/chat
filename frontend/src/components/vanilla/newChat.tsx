@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { io, Socket } from "socket.io-client";
 import "./ChatApp.css";
-import { user } from "./mockups";
+// import { user } from "./mockups";
 
 interface Message {
   id: string;
@@ -148,6 +148,17 @@ const ChatApp: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (!socketRef.current?.connected) {
+        setConnected(false);
+        setError("Connection timeout. Please refresh.");
+      }
+    }, 5000);
+  
+    return () => clearTimeout(timeout);
+  }, []);
+
+  useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
@@ -177,8 +188,8 @@ const ChatApp: React.FC = () => {
       {error && <div className="error-message">{error}</div>}
 
       <div className="messages-container">
-      <ChatMessage  message={user.user1.message} currentUser={user.user1.currentUser} />
-      <ChatMessage  message={user.user2.message} currentUser={user.user2.currentUser} />
+      {/* <ChatMessage  message={user.user1.message} currentUser={user.user1.currentUser} />
+      <ChatMessage  message={user.user2.message} currentUser={user.user2.currentUser} /> */}
 
         {messages.length === 0 ? (
           <div className="no-messages">
